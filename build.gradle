@@ -1,0 +1,13 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'ru.konofeev.Main'
+
+repositories {
+    mavenCentral()
+}
+ 
+dependencies
+{
+    testCompile fileTree(dir: 'src/main/lib', include: '*.jar')
+}
