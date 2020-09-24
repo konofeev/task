@@ -1,13 +1,40 @@
-apply plugin: 'java'
-apply plugin: 'application'
+plugins {
+    id 'java'
+    id 'application'
+}
 
-mainClassName = 'ru.konofeev.Main'
+mainClassName = 'ru.konofeev.common.Main'
 
 repositories {
+    maven { url 'http://nexus.sigma.sbrf.ru:8099/nexus/content/repositories/jcenter' }
     mavenCentral()
 }
  
-dependencies
+dependencies {
+    implementation 'com.google.guava:guava:29.0-jre'
+
+    testCompile 'org.junit.jupiter:junit-jupiter-api:5.6.2'
+    testRuntime 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+    def lombok = 'org.projectlombok:lombok:1.18.12'
+    testCompileOnly lombok
+    testAnnotationProcessor lombok
+    compileOnly lombok
+    annotationProcessor lombok
+}
+
+test {
+    useJUnitPlatform()
+    testLogging.showStandardStreams = true
+}
+
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile)
 {
-    testCompile fileTree(dir: 'src/main/lib', include: '*.jar')
+    options.encoding = 'UTF-8'
+}
+
+compileJava
+{
+    options.debug = true
 }
